@@ -5,8 +5,8 @@ include(InstallRequiredSystemLibraries)
 
 ### general settings
 string(TOLOWER ${APPLICATION_NAME} CPACK_PACKAGE_NAME)
-set(CPACK_PACKAGE_VENDOR "QLandkarte")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "GPS Map, Route, Waypoint and Tracking Tool")
+set(CPACK_PACKAGE_VENDOR "QMWEStatistic")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "FANN testing tool")
 
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
 

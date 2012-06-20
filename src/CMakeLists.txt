@@ -15,6 +15,7 @@ set(qmwestatistic_SRCS
     main.cpp
     CMainWindow.cpp
     CFannNetwork.cpp
+    CPlotter.cpp
 )
 
 if (WIN32)
@@ -24,6 +25,7 @@ endif (WIN32)
 set(qmwestatistic_HDRS
     CMainWindow.h
     CFannNetwork.h
+    CPlotter.h
     version.h
 )
 
@@ -92,6 +94,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${QT_QTXML_INCLUDE_DIR}
+  ${QT_QTSVG_INCLUDE_DIR}
   ${QT_QTSQL_INCLUDE_DIR}
   ${QT_QTOPENGL_INCLUDE_DIR}
   ${QT_QTNETWORK_INCLUDE_DIR}
@@ -102,6 +105,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/include
   ${CMAKE_SOURCE_DIR}/3rdparty/FANN/src/include
   ${CMAKE_SOURCE_DIR}/3rdparty/getopt
+  ${CMAKE_SOURCE_DIR}/3rdparty/qwt
 )
 
 set(qmwestatistic_ALLINP
@@ -132,7 +136,7 @@ if (APPLE)
     MACOSX_PACKAGE_LOCATION Resources
   )
   set(MACOSX_BUNDLE_COPYRIGHT
-    "Copyright © 2007-2012 Fabrice Crohas (fcrohas@gmail.com)"
+    "Copyright © 2007-2012 Fabrice Crohas (fcrohas@gmail.com)"
   )
   add_executable(${PROGNAME} MACOSX_BUNDLE ${qmwestatistic_ALLINP} ${MAC_EXTRA_RES})
   set_target_properties(${PROGNAME} PROPERTIES
@@ -162,6 +166,7 @@ target_link_libraries(
       ${QT_QTSCRIPT_LIBRARIES}
       ${QT_QTXMLPATTERNS_LIBRARIES}
       ${QL_OPENGL_LIBRARIES}
+      qwt
       fann
       getopt
   )

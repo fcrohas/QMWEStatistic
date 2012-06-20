@@ -25,10 +25,10 @@ public:
 
     float buildNetwork(void);
 
-    void setTrainFile(QString &file);
-    void setTestFile(QString &file);
-    void loadNetwork(QString &file);
-    void saveNetwork(QString &file);
+    void setTrainFile(QString file);
+    void setTestFile(QString file);
+    void loadNetwork(QString file);
+    void saveNetwork(QString file);
 
     struct record{
         int line;

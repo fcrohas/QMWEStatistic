@@ -34,9 +34,6 @@ CFannNetwork::~CFannNetwork() {
 
 float CFannNetwork::buildNetwork(void)
 {
-    unsigned int i = 0;
-    unsigned int decimal_point;
-
     fann_set_activation_steepness_hidden(ann, 1);
     fann_set_activation_steepness_output(ann, 1);
 
@@ -80,18 +77,18 @@ QList<CFannNetwork::record> CFannNetwork::testNetwork(void)
     return result;
 }
 
-void CFannNetwork::setTrainFile(QString &file) {
+void CFannNetwork::setTrainFile(QString file) {
     data = fann_read_train_from_file(file.toAscii().data());
 }
 
-void CFannNetwork::setTestFile(QString &file) {
+void CFannNetwork::setTestFile(QString file) {
     data = fann_read_train_from_file(file.toAscii().data());
 }
 
-void CFannNetwork::loadNetwork(QString &file) {
+void CFannNetwork::loadNetwork(QString file) {
     ann = fann_create_from_file(file.toAscii().data());
 }
 
-void CFannNetwork::saveNetwork(QString &file) {
+void CFannNetwork::saveNetwork(QString file) {
     fann_save(ann, file.toAscii().data());
 }

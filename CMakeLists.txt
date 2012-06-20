@@ -13,7 +13,7 @@ add_definitions(-DVER_MAJOR=${APPLICATION_VERSION_MAJOR} -DVER_MINOR=${APPLICATI
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 if (APPLE)
-  set(PROGNAME "QIcom PCR")
+  set(PROGNAME "QMWE Statistic")
   set(CONFIGDIR "Library/Application Support/${PROGNAME}/")
   set(MAC_BUNDLE_PATH ${EXECUTABLE_OUTPUT_PATH}/${PROGNAME}.app)
   set(MAC_ICON_FILE qmwestatistic.icns)
@@ -61,6 +61,7 @@ endif(NATIVE_FILE_DIALOG)
 include(ConfigureChecks.cmake)
 configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
+add_subdirectory(3rdparty/qwt)
 add_subdirectory(3rdparty/FANN)
 add_subdirectory(3rdparty/getopt)
 add_subdirectory(src)
