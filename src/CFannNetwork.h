@@ -32,9 +32,10 @@ public:
 
     struct record{
         int line;
-        float output;
-        float want;
-        float difference;
+        float *input;
+        float *output;
+        float *want;
+        float *difference;
     };
 
     QList<record> testNetwork(void);

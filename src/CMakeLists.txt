@@ -19,6 +19,7 @@ set(qmwestatistic_SRCS
 )
 
 if (WIN32)
+    ADD_DEFINITIONS(-D WIN32)
     SET(qmwestatistic_SRCS ${qmwestatistic_SRCS} qmwestatistic.rc)
 endif (WIN32)
 

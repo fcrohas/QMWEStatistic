@@ -69,9 +69,18 @@ QList<CFannNetwork::record> CFannNetwork::testNetwork(void)
             calc_out = fann_test(ann, data->input[i], data->output[i]);
             record trainResult;
             trainResult.line = i;
-            trainResult.want = data->output[i][11];
-            trainResult.output = calc_out[11];
-            trainResult.difference = (float) fann_abs(calc_out[11] - data->output[i][11]);
+
+            trainResult.input = new float[63];
+            trainResult.input = data->input[i];
+            trainResult.want = new float[145];
+            trainResult.output = new float[145];
+            trainResult.difference = new float[145];
+
+            for (int j=0; j < 145;j++) {
+                trainResult.want[j] = data->output[i][j];
+                trainResult.output[j] = calc_out[j];
+                trainResult.difference[j] = (float) fann_abs(calc_out[j] - data->output[i][j]);
+            }
             result.append(trainResult);
     }
     return result;
