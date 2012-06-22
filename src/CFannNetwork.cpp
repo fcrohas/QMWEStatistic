@@ -1,4 +1,5 @@
 #include "CFannNetwork.h"
+#include <QtGui>
 
 extern "C" {
     int FANN_API test_callback(struct fann *ann, struct fann_train_data *train,
@@ -15,7 +16,7 @@ extern "C" {
 CFannNetwork::CFannNetwork(QObject *parent) :
     QObject(parent)
 ,num_input(63)
-,num_output(145)
+,num_output(142)
 ,num_layers(3)
 ,num_neurons_hidden(100)
 ,desired_error(0)
@@ -69,14 +70,14 @@ QList<CFannNetwork::record> CFannNetwork::testNetwork(void)
             calc_out = fann_test(ann, data->input[i], data->output[i]);
             record trainResult;
             trainResult.line = i;
-
+            //qDebug() << "Line " << i << "\n";
             trainResult.input = new float[63];
             trainResult.input = data->input[i];
-            trainResult.want = new float[145];
-            trainResult.output = new float[145];
-            trainResult.difference = new float[145];
+            trainResult.want = new float[142];
+            trainResult.output = new float[142];
+            trainResult.difference = new float[142];
 
-            for (int j=0; j < 145;j++) {
+            for (int j=0; j < 142;j++) {
                 trainResult.want[j] = data->output[i][j];
                 trainResult.output[j] = calc_out[j];
                 trainResult.difference[j] = (float) fann_abs(calc_out[j] - data->output[i][j]);

@@ -23,7 +23,7 @@ CMainWindow::CMainWindow(QWidget *parent) :
     network = new CFannNetwork();
 
     plotter = new CPlotter();
-    plotter->setRangeY(0,144.0);
+    plotter->setRangeY(0,141.0);
     ui->plotterLayout->setContentsMargins( 0, 0, 0, 0 );
     ui->plotterLayout->addWidget( plotter );
     plotter->qwtPlot->setAxisTitle(QwtPlot::xBottom, "Expression");
@@ -52,47 +52,47 @@ void CMainWindow::slotBuildNetwork()
 
 void CMainWindow::slotTestNetwork()
 {
-    QStringList expressions = loadExpression(DATA_PATH "data_exp.txt");
+    QStringList expressions = loadExpression(DATA_PATH "sequencesTest.txt");
     QStringList outCriteria = loadExpression(DATA_PATH "labelOutCriteria.txt");
-    network->setTestFile(QString(DATA_PATH "data_MWE_symetric.txt"));
+    network->setTestFile(QString(DATA_PATH "dataTest_MWE.txt"));
 
     ui->outputText->insertPlainText(tr("Loading network.\n"));
     network->loadNetwork(QString(DATA_PATH "MWE.net"));
 
     QList<CFannNetwork::record> results = network->testNetwork();
-    double * error = new double[ results.count() * 145]; // result line * ouput per line
-    float * errorPerCriteria = new float[145]; // result line is between 0.0 and 2.0
+    double * error = new double[ results.count() * 142]; // result line * ouput per line
+    float * errorPerCriteria = new float[142]; // result line is between 0.0 and 2.0
     plotter->setRangeX(0,results.count());
     for (int i=0; i < results.count(); i++ ) {
         CFannNetwork::record result = results.at(i);
-        for (int y=0; y < 145;y++) {
+        for (int y=0; y < 142;y++) {
 
              if (result.difference[y]>1.0)
-                error[y+145*i] = result.difference[y];
+                error[y+142*i] = result.difference[y];
 
              errorPerCriteria[y] = (errorPerCriteria[y] + ((float)result.difference[y]*50))/(2);
-
-             if (result.difference[y]>1.0) {
-             //ui->outputText->insertPlainText(tr("Line with expression ( %1 )").arg(result.difference[y]*50));
-
-                /* ui->outputText->insertPlainText(tr("Line with expression ( %1 ) give result %2 for %3 but should be %4\n")
-                                                 .arg(expressions[result.line])
-                                                 .arg(result.output[y])
-                                                 .arg(outCriteria[y])
-                                                 .arg(result.want[y]));*/
-
-             }
         }
+        if (result.difference[58]>1.0) {
+        //ui->outputText->insertPlainText(tr("Line with expression ( %1 )").arg(result.difference[y]*50));
+
+            ui->outputText->insertPlainText(tr("Line with expression ( %1 ) give result %2 for %3 but should be %4\n")
+                                            .arg(expressions[result.line])
+                                            .arg(result.output[58])
+                                            .arg(outCriteria[58])
+                                            .arg(result.want[58]));
+
+        }
+
     }
 
-    for (int i=0; i < 145; i++) {
+    for (int i=0; i < 142; i++) {
         if (errorPerCriteria[i]>10.0)
             ui->outputText->insertPlainText(tr("For criteria  ( %1 )  error is %2%\n").arg(outCriteria[i]).arg(errorPerCriteria[i]));
        //qDebug() << "For criteria " << outCriteria[i] << " ouput is around " << QString("%1").arg(errorPerCriteria[i]) << " percent\n" ;
     }
 
     plotter->showSpectrogram(true);
-    plotter->setData(error,288,145);
+    plotter->setData(error,results.count(),142);
     plotter->qwtPlot->replot();
 }
 
