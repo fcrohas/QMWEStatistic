@@ -29,6 +29,7 @@ public:
     void setTestFile(QString file);
     void loadNetwork(QString file);
     void saveNetwork(QString file);
+    void initializeNetwork();
 
     struct record{
         int line;

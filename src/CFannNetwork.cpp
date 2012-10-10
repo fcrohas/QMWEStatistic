@@ -15,22 +15,26 @@ extern "C" {
 
 CFannNetwork::CFannNetwork(QObject *parent) :
     QObject(parent)
-,num_input(63)
-,num_output(142)
+,num_input(90)
+,num_output(26)
 ,num_layers(3)
 ,num_neurons_hidden(100)
 ,desired_error(0)
 ,max_epochs(1000)
 ,epochs_between_reports(10)
 {
-    // Build Network with parameters
-    ann = fann_create_standard(num_layers, num_input, num_neurons_hidden, num_output);
 }
 
 
 CFannNetwork::~CFannNetwork() {
     fann_destroy_train(data);
     fann_destroy(ann);
+}
+
+void CFannNetwork::initializeNetwork()
+{
+    // Build Network with parameters
+    ann = fann_create_standard(num_layers, num_input, num_neurons_hidden, num_output);
 }
 
 float CFannNetwork::buildNetwork(void)
@@ -71,13 +75,13 @@ QList<CFannNetwork::record> CFannNetwork::testNetwork(void)
             record trainResult;
             trainResult.line = i;
             //qDebug() << "Line " << i << "\n";
-            trainResult.input = new float[63];
+            trainResult.input = new float[num_input];
             trainResult.input = data->input[i];
-            trainResult.want = new float[142];
-            trainResult.output = new float[142];
-            trainResult.difference = new float[142];
+            trainResult.want = new float[num_output];
+            trainResult.output = new float[num_output];
+            trainResult.difference = new float[num_output];
 
-            for (int j=0; j < 142;j++) {
+            for (int j=0; j < num_output;j++) {
                 trainResult.want[j] = data->output[i][j];
                 trainResult.output[j] = calc_out[j];
                 trainResult.difference[j] = (float) fann_abs(calc_out[j] - data->output[i][j]);

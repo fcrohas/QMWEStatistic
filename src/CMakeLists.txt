@@ -16,6 +16,7 @@ set(qmwestatistic_SRCS
     CMainWindow.cpp
     CFannNetwork.cpp
     CPlotter.cpp
+    dialognewproject.cpp
 )
 
 if (WIN32)
@@ -27,12 +28,14 @@ set(qmwestatistic_HDRS
     CMainWindow.h
     CFannNetwork.h
     CPlotter.h
+    dialognewproject.h
     version.h
 )
 
 
 SET(qmwestatistic_UIS
 	    CMainWindow.ui
+            DialogNewProject.ui
 )
 
 SET(qmwestatistic_RCS
