@@ -22,6 +22,10 @@ public:
     float desired_error;
     unsigned int max_epochs;
     unsigned int epochs_between_reports;
+    unsigned int hidden_activation;
+    unsigned int output_activation;
+    unsigned int stop_function;
+    unsigned int train_algorithm;
 
     float buildNetwork(void);
 

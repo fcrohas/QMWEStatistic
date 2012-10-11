@@ -22,13 +22,19 @@ CFannNetwork::CFannNetwork(QObject *parent) :
 ,desired_error(0)
 ,max_epochs(1000)
 ,epochs_between_reports(10)
+,hidden_activation(FANN_SIGMOID_SYMMETRIC)
+,output_activation(FANN_SIGMOID_SYMMETRIC)
+,stop_function(FANN_STOPFUNC_BIT)
+,train_algorithm(FANN_TRAIN_RPROP)
 {
 }
 
 
 CFannNetwork::~CFannNetwork() {
-    fann_destroy_train(data);
-    fann_destroy(ann);
+    if (data != NULL)
+        fann_destroy_train(data);
+    if (ann !=NULL)
+        fann_destroy(ann);
 }
 
 void CFannNetwork::initializeNetwork()
@@ -42,13 +48,13 @@ float CFannNetwork::buildNetwork(void)
     fann_set_activation_steepness_hidden(ann, 1);
     fann_set_activation_steepness_output(ann, 1);
 
-    fann_set_activation_function_hidden(ann, FANN_SIGMOID_SYMMETRIC);
-    fann_set_activation_function_output(ann, FANN_SIGMOID_SYMMETRIC);
+    fann_set_activation_function_hidden(ann, (fann_activationfunc_enum)hidden_activation);
+    fann_set_activation_function_output(ann, (fann_activationfunc_enum)output_activation);
 
-    fann_set_train_stop_function(ann, FANN_STOPFUNC_BIT);
+    fann_set_train_stop_function(ann, (fann_stopfunc_enum)stop_function);
     fann_set_bit_fail_limit(ann, 0.01f);
 
-    fann_set_training_algorithm(ann, FANN_TRAIN_RPROP);
+    fann_set_training_algorithm(ann, (fann_train_enum)train_algorithm);
 
     fann_init_weights(ann, data);
 
@@ -81,7 +87,7 @@ QList<CFannNetwork::record> CFannNetwork::testNetwork(void)
             trainResult.output = new float[num_output];
             trainResult.difference = new float[num_output];
 
-            for (int j=0; j < num_output;j++) {
+            for (unsigned int j=0; j < num_output;j++) {
                 trainResult.want[j] = data->output[i][j];
                 trainResult.output[j] = calc_out[j];
                 trainResult.difference[j] = (float) fann_abs(calc_out[j] - data->output[i][j]);

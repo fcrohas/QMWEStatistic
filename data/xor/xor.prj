@@ -1,0 +1,7 @@
+[Project]
+LabelInputFile=D:/usr/fcr/QMWEStatistic/data/xor/labelincriteria.txt
+LabelOutputFile=D:/usr/fcr/QMWEStatistic/data/xor/labeloutcriteria.txt
+LearnFile=D:/usr/fcr/QMWEStatistic/data/xor/xor_fixed.data
+TestFile=D:/usr/fcr/QMWEStatistic/data/xor/xor.data
+LabelActivationFile=D:/usr/fcr/QMWEStatistic/data/xor/inputvalue.txt
+FannFile=D:/usr/fcr/QMWEStatistic/data/xor/xor_float.net

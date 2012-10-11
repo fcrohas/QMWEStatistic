@@ -5,6 +5,7 @@
 #include "CFannNetwork.h"
 #include "CPlotter.h"
 #include "dialognewproject.h"
+#include "CDialogSettings.h"
 
 namespace Ui {
     class CMainWindow;
@@ -29,6 +30,8 @@ private:
     QString SequenceFile;
     QString activationLearnFile;
     QString activationTestFile;
+    QString currentProject;
+    void initializeGraphic(int y);
     int fannIn;
     int fannOut;
 
@@ -38,6 +41,7 @@ private slots:
     void slotLoadProject();
     void slotNewProject();
     void slotCloseProject();
+    void slotSettings();
     void slotErrorPercentChanged(int val);
     void slotErrorLevelChanged(int val);
 };

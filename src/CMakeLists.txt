@@ -16,6 +16,7 @@ set(qmwestatistic_SRCS
     CMainWindow.cpp
     CFannNetwork.cpp
     CPlotter.cpp
+    CDialogSettings.cpp
     dialognewproject.cpp
 )
 
@@ -28,6 +29,7 @@ set(qmwestatistic_HDRS
     CMainWindow.h
     CFannNetwork.h
     CPlotter.h
+    CDialogSettings.h
     dialognewproject.h
     version.h
 )
@@ -36,6 +38,7 @@ set(qmwestatistic_HDRS
 SET(qmwestatistic_UIS
 	    CMainWindow.ui
             DialogNewProject.ui
+            CDialogSettings.ui
 )
 
 SET(qmwestatistic_RCS

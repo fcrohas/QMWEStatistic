@@ -14,6 +14,7 @@
 CMainWindow::CMainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::CMainWindow)
+  ,currentProject("")
 {
     ui->setupUi(this);
     connect(ui->buildNetwork,SIGNAL(clicked()),this,SLOT(slotBuildNetwork()));
@@ -23,18 +24,25 @@ CMainWindow::CMainWindow(QWidget *parent) :
     connect(ui->actionClose,SIGNAL(triggered()),this,SLOT(slotCloseProject()));
     connect(ui->errorLevel,SIGNAL(sliderMoved(int)),this,SLOT(slotErrorLevelChanged(int)));
     connect(ui->errorPercent,SIGNAL(sliderMoved(int)),this,SLOT(slotErrorPercentChanged(int)));
+    connect(ui->actionSettings,SIGNAL(triggered()),this,SLOT(slotSettings()));
+    ui->buildNetwork->setEnabled(false);
+    ui->testNetwork->setEnabled(false);
     slotErrorLevelChanged(10);
     slotErrorPercentChanged(50);
 }
 
 CMainWindow::~CMainWindow()
 {
-    delete network;
-    delete ui;
+    if (network)
+        delete network;
+    if (ui)
+        delete ui;
 }
 
 void CMainWindow::slotBuildNetwork()
 {
+    if (currentProject == "")
+        return;
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     ui->outputText->clear();
     ui->outputText->insertPlainText(QString("Starting working on datas "+activationLearnFile+".\n"));
@@ -49,6 +57,8 @@ void CMainWindow::slotBuildNetwork()
 
 void CMainWindow::slotTestNetwork()
 {
+    if (currentProject == "")
+        return;
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     ui->outputText->clear();
     QStringList expressions = loadExpression(SequenceFile);
@@ -124,17 +134,25 @@ QStringList CMainWindow::loadExpression(QString file)
 void CMainWindow::slotNewProject()
 {
     DialogNewProject dialog;
+    QString file;
     if (dialog.exec() == QDialog::Accepted) {
         // Save project file
-        dialog.setFileName(QFileDialog::getSaveFileName(this, tr("Save Project"), "C:\\myproject.prj", tr("Images (*.prj)")));
+        file = QFileDialog::getSaveFileName(this, tr("Save Project"), "C:\\myproject.prj", tr("Images (*.prj)"));
+        dialog.setFileName(file);
         dialog.Save();
+        currentProject = file;
+        slotLoadProject();
     }
     dialog.close();
 }
 
 void CMainWindow::slotLoadProject()
 {
-    QSettings settings(QFileDialog::getOpenFileName(this, tr("Project File"), "C:\\", tr("Image Files (*.prj)")),QSettings::IniFormat);
+    if (currentProject=="")
+        currentProject = QFileDialog::getOpenFileName(this, tr("Project File"), "C:\\", tr("Image Files (*.prj)"));
+    if (currentProject=="")
+        return;
+    QSettings settings(currentProject,QSettings::IniFormat);
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     labelInFile = settings.value("Project/LabelInputFile").toString();
@@ -143,8 +161,22 @@ void CMainWindow::slotLoadProject()
     activationTestFile = settings.value("Project/TestFile").toString();
     SequenceFile = settings.value("Project/LabelActivationFile").toString();
     fannFile = settings.value("Project/FannFile").toString();
-    ui->cbCriteriaOut->clear();
+
+    //if (network)
+    //    delete network;
     network = new CFannNetwork();
+
+    network->num_neurons_hidden = settings.value("Settings/hiddenNeurons",100).toInt();
+    network->desired_error = settings.value("Settings/desiredError",0).toInt();
+    network->num_layers = settings.value("Settings/numberLayers",3).toInt();
+    network->max_epochs = settings.value("Settings/maxEpochs",1000).toInt();
+    network->epochs_between_reports = settings.value("Settings/epochsReports",10).toInt();
+    network->hidden_activation = settings.value("Settings/hiddenFunction",5).toInt();
+    network->output_activation = settings.value("Settings/outputFunction",5).toInt();
+    network->stop_function = settings.value("Settings/stopFunction",1).toInt();
+    network->train_algorithm = settings.value("Settings/trainMethod",2).toInt();
+
+    ui->cbCriteriaOut->clear();
     // Reading Neural network input data number
     QStringList expressions = loadExpression(QString(labelInFile));
     ui->fannIn->setText(QString("%1").arg(expressions.count()));
@@ -159,15 +191,25 @@ void CMainWindow::slotLoadProject()
     network->num_output = fannOut;
     network->initializeNetwork();
 
+    initializeGraphic(fannOut);
+    ui->buildNetwork->setEnabled(true);
+    ui->testNetwork->setEnabled(true);
+
+    QApplication::restoreOverrideCursor();
+}
+
+void CMainWindow::initializeGraphic(int y)
+{
+    //if (plotter)
+    //        delete plotter;
     plotter = new CPlotter();
-    plotter->setRangeY(0,fannOut);
+    plotter->setRangeY(0,y);
     plotter->setDataRange(0.0,2.0);
     ui->plotterLayout->setContentsMargins( 0, 0, 0, 0 );
     ui->plotterLayout->addWidget( plotter );
     plotter->qwtPlot->setAxisTitle(QwtPlot::xBottom, "Expression");
     plotter->qwtPlot->setAxisTitle(QwtPlot::yLeft  , "Output possibility");
     plotter->setColorMap(CPlotter::standard);
-    QApplication::restoreOverrideCursor();
 }
 
 void CMainWindow::slotCloseProject()
@@ -183,4 +225,25 @@ void CMainWindow::slotErrorLevelChanged(int val)
 void CMainWindow::slotErrorPercentChanged(int val)
 {
     ui->labelErrorCriteria->setText(QString("Error Percent Criteria (%1 %)").arg(val));
+}
+
+void CMainWindow::slotSettings()
+{
+    CDialogSettings dialog;
+    dialog.num_neurons_hidden =  network->num_neurons_hidden;
+    dialog.desired_error = network->desired_error;
+    dialog.num_layers = network->num_layers;
+    dialog.max_epochs = network->max_epochs;
+    dialog.epochs_between_reports = network->epochs_between_reports;
+    dialog.hidden_activation = network->hidden_activation;
+    dialog.output_activation = network->output_activation;
+    dialog.stop_function = network->stop_function;
+    dialog.train_algorithm = network->train_algorithm;
+    dialog.Load();
+    if (dialog.exec() == QDialog::Accepted) {
+        // Save project file
+        dialog.setFileName(currentProject);
+        dialog.Save();
+    }
+    dialog.close();
 }

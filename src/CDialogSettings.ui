@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CDialogSettings</class>
+ <widget class="QDialog" name="CDialogSettings">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>430</width>
+    <height>331</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Neural Network Settings</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>292</y>
+     <width>341</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Number Layers</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="numberLayers">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>19</y>
+     <width>321</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>52</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Hidden neurons</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="hiddenNeurons">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>50</y>
+     <width>321</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Desired error</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="desiredError">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>80</y>
+     <width>321</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>112</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Max epochs</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="maxEpochs">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>110</y>
+     <width>321</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>141</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Epochs reports</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="epochsReports">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>140</y>
+     <width>321</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>173</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Hidden function</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="hiddenFunction">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>170</y>
+     <width>321</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>FANN_LINEAR</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_THRESHOLD</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_THRESHOLD_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_SIGMOID</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_SIGMOID_STEPWISE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_SIGMOID_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_GAUSSIAN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_GAUSSIAN_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_ELLIOT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_ELLIOT_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_LINEAR_PIECE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_LINEAR_PIECE_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_SIN_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_COS_SYMMETRIC</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>202</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output function</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>230</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Train method</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="trainMethod">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>230</y>
+     <width>321</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>TRAIN_INCREMENTAL</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>TRAIN_BATCH</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>TRAIN_RPROP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>TRAIN_QUICKPROP</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>263</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Stop function</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="stopFunction">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>260</y>
+     <width>321</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>STOPFUNC_MSE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>STOPFUNC_BIT</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="outputFunction">
+   <property name="geometry">
+    <rect>
+     <x>91</x>
+     <y>199</y>
+     <width>321</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>FANN_LINEAR</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_THRESHOLD</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_THRESHOLD_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_SIGMOID</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_SIGMOID_STEPWISE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_SIGMOID_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_GAUSSIAN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_GAUSSIAN_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_ELLIOT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_ELLIOT_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_LINEAR_PIECE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_LINEAR_PIECE_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_SIN_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_COS_SYMMETRIC</string>
+    </property>
+   </item>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>CDialogSettings</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>CDialogSettings</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
