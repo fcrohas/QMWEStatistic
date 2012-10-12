@@ -210,6 +210,11 @@
    </item>
    <item>
     <property name="text">
+     <string>FANN_SIGMOID_SYMMETRIC_STEPWISE</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
      <string>FANN_GAUSSIAN</string>
     </property>
    </item>
@@ -375,6 +380,11 @@
    <item>
     <property name="text">
      <string>FANN_SIGMOID_SYMMETRIC</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>FANN_SIGMOID_SYMMETRIC_STEPWISE</string>
     </property>
    </item>
    <item>

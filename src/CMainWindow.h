@@ -39,6 +39,7 @@ private slots:
     void slotBuildNetwork();
     void slotTestNetwork();
     void slotLoadProject();
+    void slotLoadNewProject(QString val);
     void slotNewProject();
     void slotCloseProject();
     void slotSettings();

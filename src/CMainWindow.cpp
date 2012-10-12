@@ -28,7 +28,9 @@ CMainWindow::CMainWindow(QWidget *parent) :
     ui->buildNetwork->setEnabled(false);
     ui->testNetwork->setEnabled(false);
     slotErrorLevelChanged(10);
-    slotErrorPercentChanged(50);
+    slotErrorPercentChanged(10);
+    network = 0;
+    plotter = 0;
 }
 
 CMainWindow::~CMainWindow()
@@ -140,18 +142,20 @@ void CMainWindow::slotNewProject()
         file = QFileDialog::getSaveFileName(this, tr("Save Project"), "C:\\myproject.prj", tr("Images (*.prj)"));
         dialog.setFileName(file);
         dialog.Save();
-        currentProject = file;
-        slotLoadProject();
+        slotLoadNewProject(file);
+
     }
     dialog.close();
 }
 
-void CMainWindow::slotLoadProject()
+void CMainWindow::slotLoadNewProject(QString val = "")
 {
-    if (currentProject=="")
+    if (val == "") {
         currentProject = QFileDialog::getOpenFileName(this, tr("Project File"), "C:\\", tr("Image Files (*.prj)"));
-    if (currentProject=="")
-        return;
+    } else {
+        currentProject = val;
+    }
+
     QSettings settings(currentProject,QSettings::IniFormat);
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
@@ -162,8 +166,8 @@ void CMainWindow::slotLoadProject()
     SequenceFile = settings.value("Project/LabelActivationFile").toString();
     fannFile = settings.value("Project/FannFile").toString();
 
-    //if (network)
-    //    delete network;
+    if (network)
+        delete network;
     network = new CFannNetwork();
 
     network->num_neurons_hidden = settings.value("Settings/hiddenNeurons",100).toInt();
@@ -198,10 +202,19 @@ void CMainWindow::slotLoadProject()
     QApplication::restoreOverrideCursor();
 }
 
+void CMainWindow::slotLoadProject()
+{
+    currentProject = QFileDialog::getOpenFileName(this, tr("Project File"), "C:\\", tr("Image Files (*.prj)"));
+    if (currentProject=="") {
+        return;
+    }
+    slotLoadNewProject(currentProject);
+}
+
 void CMainWindow::initializeGraphic(int y)
 {
-    //if (plotter)
-    //        delete plotter;
+    if (plotter)
+            delete plotter;
     plotter = new CPlotter();
     plotter->setRangeY(0,y);
     plotter->setDataRange(0.0,2.0);

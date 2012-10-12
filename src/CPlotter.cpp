@@ -68,7 +68,7 @@ void CPlotter::setData(double * Array, int sizex, int sizey)
         m_RasterData->setData(Array, sizex, sizey);
         m_spectrogram->setData(m_RasterData);
         m_DataRange = m_spectrogram->data()->interval(Qt::ZAxis);
-        setDataAutoRange();
+        //setDataAutoRange();
         initColorBar();
         initZoomer();
 }
