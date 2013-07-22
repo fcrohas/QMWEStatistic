@@ -62,7 +62,7 @@ public:
                 //clone->setBoundingRect(QwtDoubleRect(m_RangeX.min, m_RangeY.min, m_RangeX.max, m_RangeY.max));
                 clone->setInterval(Qt::XAxis, QwtInterval( m_RangeX.min, m_RangeX.max));
                 clone->setInterval(Qt::YAxis, QwtInterval( m_RangeY.min, m_RangeY.max));
-                clone->setInterval(Qt::ZAxis, QwtInterval(0.0, 2.0));
+                clone->setInterval(Qt::ZAxis, QwtInterval(0.0, 1.0));
                 clone->setData(m_Array, m_DataSize.x, m_DataSize.y);
                 return clone;
     }
@@ -88,7 +88,7 @@ public:
             m_DataSize.x = sizex;
             m_DataSize.y = sizey;
             int size = sizex * sizey;
-            setInterval( Qt::ZAxis, QwtInterval( 0.0,2.0));
+            setInterval( Qt::ZAxis, QwtInterval( 0.0,1.0));
             if (m_Array != NULL)
                     delete [] m_Array;
             m_Array = new double [size];

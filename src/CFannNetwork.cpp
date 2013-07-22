@@ -90,7 +90,7 @@ QList<CFannNetwork::record> CFannNetwork::testNetwork(void)
             for (unsigned int j=0; j < num_output;j++) {
                 trainResult.want[j] = data->output[i][j];
                 trainResult.output[j] = calc_out[j];
-                trainResult.difference[j] = (float) fann_abs(calc_out[j] - data->output[i][j]);
+                trainResult.difference[j] = (float) fann_abs(((calc_out[j] + 1)/2.0) - ((data->output[i][j]+1)/2.0));
             }
             result.append(trainResult);
     }

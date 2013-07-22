@@ -73,7 +73,7 @@ void CMainWindow::slotTestNetwork()
 
     QList<CFannNetwork::record> results = network->testNetwork();
     double * error = new double[ results.count() * fannOut]; // result line * ouput per line
-    float * errorPerCriteria = new float[fannOut]; // result line is between 0.0 and 2.0
+    float * errorPerCriteria = new float[fannOut]; // result line is between 0.0 and 1.0
     plotter->setRangeX(0,results.count());
     double errorLevel = ui->errorLevel->value()/10.0;
     for (int i=0; i < results.count(); i++ ) {
@@ -83,7 +83,7 @@ void CMainWindow::slotTestNetwork()
              if (result.difference[y]>errorLevel)
                 error[y+fannOut*i] = result.difference[y];
 
-             errorPerCriteria[y] = (errorPerCriteria[y] + ((float)result.difference[y]*50))/(2);
+             errorPerCriteria[y] = errorPerCriteria[y] + (float)result.difference[y];
         }
         if (result.difference[selectedOutput]>errorLevel) {
         //ui->outputText->insertPlainText(tr("Line with expression ( %1 )").arg(result.difference[y]*50));
@@ -99,9 +99,9 @@ void CMainWindow::slotTestNetwork()
     }
 
     for (int i=0; i < fannOut; i++) {
-        if (errorPerCriteria[i]>ui->errorPercent->value())
-            ui->outputText->insertPlainText(tr("For criteria  ( %1 )  error is %2%\n").arg(outCriteria[i]).arg(errorPerCriteria[i]));
-       //qDebug() << "For criteria " << outCriteria[i] << " ouput is around " << QString("%1").arg(errorPerCriteria[i]) << " percent\n" ;
+        if (100.0 * errorPerCriteria[i]/results.count() > ui->errorPercent->value())
+            ui->outputText->insertPlainText(tr("For criteria  ( %1 )  error is %2%\n").arg(outCriteria[i]).arg(100.0*errorPerCriteria[i]/results.count()));
+       qDebug() << "For criteria " << outCriteria[i] << " ouput is around " << QString("%1").arg(100.0*errorPerCriteria[i]/results.count()) << "% percent\n" ;
     }
 
     plotter->showSpectrogram(true);
@@ -217,7 +217,7 @@ void CMainWindow::initializeGraphic(int y)
             delete plotter;
     plotter = new CPlotter();
     plotter->setRangeY(0,y);
-    plotter->setDataRange(0.0,2.0);
+    plotter->setDataRange(0.0,1.0);
     ui->plotterLayout->setContentsMargins( 0, 0, 0, 0 );
     ui->plotterLayout->addWidget( plotter );
     plotter->qwtPlot->setAxisTitle(QwtPlot::xBottom, "Expression");
